@@ -1,0 +1,39 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# ---- Environments ----
+.venv/
+venv/
+env/
+.python-version
+
+# ---- Jupyter ----
+.ipynb_checkpoints/
+
+# ---- Project data (do NOT commit the 2.5 GB dataset) ----
+/work/
+/tmp/
+data/
+*.csv
+!results/final_metrics.csv      # keep the one small results file
+
+# ---- Model checkpoints ----
+*.pth
+models/
+
+# ---- Cached uncertainties / large arrays ----
+*.npy
+
+# ---- Generated outputs ----
+outputs/
+
+# ---- OS / editor cruft ----
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
