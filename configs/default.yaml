@@ -1,0 +1,55 @@
+# Default configuration for quality-gated fetal ultrasound classification.
+# Replaces the hardcoded Deepnote paths (/work, /tmp) from the original notebook
+# with portable, relative paths so the project runs after a plain `git clone`.
+
+paths:
+  # Dataset is downloaded at runtime from Zenodo (record 3904280) into data_dir.
+  # Nothing under data_dir is committed (see .gitignore).
+  data_dir: "data/fetal_planes"          # extracted dataset root
+  images_dir: "data/fetal_planes/Images" # image folder inside the archive
+  csv_path: "data/fetal_planes/FETAL_PLANES_DB_data.csv"
+  output_dir: "outputs"                  # figures, metrics, cached uncertainties
+  model_dir: "models"                    # classifier checkpoints
+  dataset_url: "https://zenodo.org/records/3904280/files/FETAL_PLANES_ZENODO.zip?download=1"
+
+data:
+  image_size: 256
+  num_classes: 6
+  class_names:
+    - "Fetal abdomen"
+    - "Fetal brain"
+    - "Fetal femur"
+    - "Fetal thorax"
+    - "Maternal cervix"
+    - "Other"
+  val_ratio: 0.15
+  test_ratio: 0.15
+  seed: 42
+
+train:
+  batch_size: 16
+  num_epochs: 15
+  learning_rate: 0.0003      # 3e-4; OneCycleLR scales max_lr to 10x internally
+  weight_decay: 0.0001       # 1e-4
+  label_smoothing: 0.1
+  grad_clip_norm: 1.0
+
+diffusion:
+  # Inference-heavy; an L4/T4 GPU is sufficient.
+  ddpm_num_inference_steps: 20
+  noise_levels: [400]        # original notebook explored [200, 400, 600]
+  num_uncertainty_samples: 2 # Monte Carlo reconstructions for variance
+  # NOTE: the bundled prior is google/ddpm-celebahq-256 (out of domain).
+  # Replace with a fetal-US diffusion model to make this signal competitive.
+  prior_model: "google/ddpm-celebahq-256"
+
+gating:
+  target_coverage: 0.85
+  # Starting thresholds before calibration. Grid-search on the validation set
+  # overrides these; the reported run converged to conf 0.882 / var 0.0064.
+  confidence_threshold: 0.60
+  uncertainty_threshold: 0.15
+
+runtime:
+  device: "cuda"             # falls back to cpu if unavailable
+  num_workers: 2
