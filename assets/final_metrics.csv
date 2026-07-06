@@ -1,6 +1,0 @@
-metric,value
-overall_accuracy,0.9549707602339181
-deferral_rate,0.1847953216374269
-coverage,0.815204678362573
-accuracy_on_non_deferred,0.9913916786226685
-accuracy_on_deferred,0.7943037974683544
