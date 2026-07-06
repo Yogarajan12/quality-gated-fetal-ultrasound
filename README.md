@@ -114,7 +114,7 @@ quality-gated-fetal-ultrasound/
 │   └── utils.py                  # seeding, denormalization
 ├── scripts/
 │   └── run_experiment.py         # CLI entrypoint for the full pipeline
-├── assets/                       # figures rendered in this README
+├── assets/                       # figures rendered in this README and more
 ├── requirements.txt
 ├── LICENSE
 └── README.md
