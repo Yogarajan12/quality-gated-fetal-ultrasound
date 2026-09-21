@@ -104,6 +104,7 @@ quality-gated-fetal-ultrasound/
 ├── config.py                     # loads configs/default.yaml into a Config object
 ├── configs/
 │   └── default.yaml              # paths, hyperparameters, thresholds
+├── report/                       # project report
 ├── src/
 │   ├── data.py                   # dataset download, splits, transforms, loaders
 │   ├── classifier.py             # ResNet-18 model + training loop
